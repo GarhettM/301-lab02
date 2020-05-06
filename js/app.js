@@ -1,7 +1,7 @@
 'use-strict'
 
 const pictureArray = [];
-const keywordArray = [];
+
 
 function PictureCreate(image_url, title, description, keyword, horns) {
   this.image_url = image_url;
@@ -15,6 +15,7 @@ function PictureCreate(image_url, title, description, keyword, horns) {
 PictureCreate.prototype.render = function () {
   const $pictureTemplateClone = $('li:first-child').clone();
 
+  $pictureTemplateClone.attr('class', this.keyword);
   $pictureTemplateClone.find('h2').text(this.title);
   $pictureTemplateClone.find('h4').text(this.keyword);
   $pictureTemplateClone.find('img').attr('src', this.image_url);
@@ -31,25 +32,64 @@ $.get('data/page-1.json', function (data) {
     newPicture.render();
   })
   allKeyWords();
+  
 })
 
 
 
 const allKeyWords = () => {
+  let keywordArray = [];
   console.log(pictureArray.length)
   pictureArray.forEach((value) => {
     if (!keywordArray.includes(value.keyword)) {
       keywordArray.push(value.keyword);
+
     }
+  })
+  keywordArray.sort();
+  keywordArray.forEach((value) => {
+    let optionKeywords = `<option value="${value}">${value}</option>`;
+    $('select').append(optionKeywords);
   })
 }
 
-console.log(keywordArray)
+$('select').on('change', function () {
+
+  
+  
+  
+  
+  
+  
+  
+  
+  pictureArray.forEach((a, index) => {
+    let x = $(this).val();
+    if(x === pictureArray[index].keyword) {
+      $(picture[index].keyword).hasClass(pictureArray[index].keyword);
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      console.log(index)
+      console.log($(this).val())
+      console.log(pictureArray[index].keyword)
+    }
+  })
 
 
-const $optionKeywords = $('select').find('option').text('test');
 
 
+});
 
+  // if ($('select').children('option:selected').text() !== 'Filter By Keyword')  {
+  //   $('li').css('display', 'none');
+  //   $(`.${$('select').children('option:selected').val()}`).css('display', '')
+  // }
 
 
