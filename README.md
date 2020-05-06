@@ -21,3 +21,15 @@ Start time: 4:20
 Finish time: 5:20
 
 Actual time needed to complete: _____
+
+------- Lab 03 ------
+
+Number and name of feature: Feature 1: Pagination
+
+Estimate of time needed to complete: 45 minutes
+
+Start time: 3:25p
+
+Finish time: 4:05p
+
+Actual time needed to complete: _____
