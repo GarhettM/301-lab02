@@ -3,6 +3,7 @@
 
 // --- this is a cup, we can change what's in it but we don't need to change the cup
 const pictureArray = [];
+let pageType = '1';
 
 function PictureCreate(image_url, title, description, keyword, horns, page) {
   this.image_url = image_url;
@@ -46,7 +47,7 @@ const pageOneDropdown = () => {
       }
     }
   });
-  $('select').empty();
+  $('option').not(':first').remove();
   keywordArray.sort();
   keywordArray.forEach((value) => {
     let optionKeywords = `<option value="${value}">${value}</option>`;
@@ -63,7 +64,7 @@ const pageTwoDropdown = () => {
       }
     }
   });
-  $('select').slice(1).empty();
+  $('option').not(':first').remove();
   keywordArray.sort();
   keywordArray.forEach((value) => {
     let optionKeywords = `<option value="${value}">${value}</option>`;
@@ -92,16 +93,21 @@ const getDataPages = () => {
 
 // --- button to handle click event and change which items are shown on page
 $('#moreItems').on('click', function () {
+  const page2Switch = '2';
+  pageType = page2Switch;
   $('li.1').hide();
   $('li.2').show();
   $('#moreItems').hide();
   $('#goBack').show();
   $('#pageOne').hide();
   $('#pageTwo').show();
+  
   pageTwoDropdown();
 });
 
 $('#goBack').on('click', function () {
+  const page1Switch = '1';
+  pageType = page1Switch;
   $('li.2').hide();
   $('li.1').show();
   $('#goBack').hide();
@@ -120,24 +126,22 @@ getDataPages();
 
 $('select').on('change', function () {
 
+  $('li').hide();
+  let $selected = $(this).val();
+  // if($selected !== 'default') {
 
-
-  // pictureArray.forEach((a, index) => {
-  //   let x = $(this).val();
-  //   if(x === pictureArray[index].keyword) {
-  //     $(picture[index].keyword).hasClass(pictureArray[index].keyword);
-
-  // console.log(index);
-  // console.log($(this).val());
-  // console.log(pictureArray[index].keyword);
-  //   }
-  // });
-
-
+    pictureArray.forEach((a, index) => {
+      if($selected === pictureArray[index].keyword) {
+        console.log('test')
+        if (pictureArray[index].page === pageType)  {
+          pictureArray[index].renderWithHandlebars();
+        }
+      }
+    });
+  // } else if (pictureArray.page === pageType)  {
+  //   pictureArray.renderWithHandlebars();
+  // }
 });
-// if ($('select').children('option:selected').text() !== 'Filter By Keyword')  {
-//   $('li').css('display', 'none');
-//   $(`.${$('select').children('option:selected').val()}`).css('display', '')
-// }
+
 
 
