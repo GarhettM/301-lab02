@@ -1,4 +1,6 @@
+/* global Handlebars, $ */
 'use-strict';
+
 // --- this is a cup, we can change what's in it but we don't need to change the cup
 const pictureArray = [];
 
@@ -12,11 +14,20 @@ function PictureCreate(image_url, title, description, keyword, horns, page) {
   pictureArray.push(this);
 }
 
+// ---handlebars template for rendering to page -----
+PictureCreate.prototype.renderWithHandlebars = function() {
+  const pictureTemplateHandlebars = Handlebars.compile($('#pictureTemplate').html()); // declare the function
+  const result = pictureTemplateHandlebars(this); // pass the object through the function
+  $('ul').append(result); // append the returned html
+};
+
+// -------------- OLD UNUSED render function - now we have handlebars! -----
+
 PictureCreate.prototype.render = function () {
   const $pictureTemplateClone = $('li:first-child').clone();
 
-  $pictureTemplateClone.attr('class', this.page);
-  // $pictureTemplateClone.attr('class', this.keyword);
+  $pictureTemplateClone.addClass(this.page); // needed the brackets to make it work, i guess
+  $pictureTemplateClone.addClass(this.keyword);
   $pictureTemplateClone.find('h2').text(this.title);
   $pictureTemplateClone.find('h4').text(this.keyword);
   $pictureTemplateClone.find('img').attr('src', this.image_url);
@@ -24,25 +35,25 @@ PictureCreate.prototype.render = function () {
   $pictureTemplateClone.find('p').text(this.description);
 
   $('ul').append($pictureTemplateClone);
-
 };
 
 // --- retrieves info from json files -------
 $.get('data/page-1.json', function (data) {
   data.forEach(picture => {
-    const newPicture = new PictureCreate(picture.image_url, picture.title, picture.description, picture.keyword, picture.horns, 1);
-    newPicture.render();
+    const newPicture = new PictureCreate(picture.image_url, picture.title, picture.description, picture.keyword, picture.horns, '1');
+    newPicture.renderWithHandlebars();
   });
   allKeyWords();
 });
 
 $.get('data/page-2.json', function (data) {
   data.forEach(picture => {
-    const newPicture = new PictureCreate(picture.image_url, picture.title, picture.description, picture.keyword, picture.horns, 2);
-    newPicture.render();
+    const newPicture = new PictureCreate(picture.image_url, picture.title, picture.description, picture.keyword, picture.horns, '2');
+    newPicture.renderWithHandlebars();
   });
   allKeyWords();
   $('li.2').hide();
+
 });
 
 

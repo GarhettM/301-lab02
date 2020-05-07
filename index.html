@@ -8,6 +8,17 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layouts.css">
   <link rel="stylesheet" href="css/modules.css">
+
+  <script id="pictureTemplate" type="text/x-handlebars-template">
+    <li class="{{this.page}} {{this.keyword}}">
+      <h2>{{this.title}}</h2>
+      <h4>{{this.keyword}}</h4>
+      <img src="{{this.image_url}}">
+      <h5>{{this.horns}}</h5>
+      <p>{{this.description}}</p>
+    </li>
+  </script>
+
 </head>
 
 <body>
