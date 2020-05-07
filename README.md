@@ -20,7 +20,14 @@ Start time: 4:20
 
 Finish time: 5:20
 
-Actual time needed to complete: _____
+Actual time needed to complete: worked 3 hours yesterday on this, continuing on day 2....
+
+Start time day 2: 5:55p
+
+Finish time day 2: 
+
+Actual time needed to complete day 2: 
+
 
 ------- Lab 03 ------
 

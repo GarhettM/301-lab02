@@ -15,7 +15,7 @@ function PictureCreate(image_url, title, description, keyword, horns, page) {
 }
 
 // ---handlebars template for rendering to page -----
-PictureCreate.prototype.renderWithHandlebars = function() {
+PictureCreate.prototype.renderWithHandlebars = function () {
   const pictureTemplateHandlebars = Handlebars.compile($('#pictureTemplate').html()); // declare the function
   const result = pictureTemplateHandlebars(this); // pass the object through the function
   $('ul').append(result); // append the returned html
@@ -33,39 +33,20 @@ PictureCreate.prototype.render = function () {
   $pictureTemplateClone.find('img').attr('src', this.image_url);
   $pictureTemplateClone.find('h5').text(this.horns);
   $pictureTemplateClone.find('p').text(this.description);
-
   $('ul').append($pictureTemplateClone);
 };
 
-// --- retrieves info from json files -------
-$.get('data/page-1.json', function (data) {
-  data.forEach(picture => {
-    const newPicture = new PictureCreate(picture.image_url, picture.title, picture.description, picture.keyword, picture.horns, '1');
-    newPicture.renderWithHandlebars();
-  });
-  allKeyWords();
-});
-
-$.get('data/page-2.json', function (data) {
-  data.forEach(picture => {
-    const newPicture = new PictureCreate(picture.image_url, picture.title, picture.description, picture.keyword, picture.horns, '2');
-    newPicture.renderWithHandlebars();
-  });
-  allKeyWords();
-  $('li.2').hide();
-
-});
-
-
-// ---- makes an array of all keywords to use in the dropdown menu -----
-const allKeyWords = () => {
+// -------------- drop down menu functions --------
+const pageOneDropdown = () => {
   let keywordArray = [];
-  console.log(pictureArray.length);
   pictureArray.forEach((value) => {
-    if (!keywordArray.includes(value.keyword)) {
-      keywordArray.push(value.keyword);
+    if (value.page === '1') {
+      if (!keywordArray.includes(value.keyword)) {
+        keywordArray.push(value.keyword);
+      }
     }
   });
+  $('select').empty();
   keywordArray.sort();
   keywordArray.forEach((value) => {
     let optionKeywords = `<option value="${value}">${value}</option>`;
@@ -73,24 +54,69 @@ const allKeyWords = () => {
   });
 };
 
+const pageTwoDropdown = () => {
+  let keywordArray = [];
+  pictureArray.forEach((value) => {
+    if (value.page === '2') {
+      if (!keywordArray.includes(value.keyword)) {
+        keywordArray.push(value.keyword);
+      }
+    }
+  });
+  $('select').slice(1).empty();
+  keywordArray.sort();
+  keywordArray.forEach((value) => {
+    let optionKeywords = `<option value="${value}">${value}</option>`;
+    $('select').append(optionKeywords);
+  });
+};
+
+
+// --- retrieves info from json files -------
+const getDataPages = () => {
+  $.get('data/page-1.json', function (data) {
+    data.forEach(picture => {
+      const newPicture = new PictureCreate(picture.image_url, picture.title, picture.description, picture.keyword, picture.horns, '1');
+      newPicture.renderWithHandlebars();
+    });
+    pageOneDropdown();
+  });
+
+  $.get('data/page-2.json', function (data) {
+    data.forEach(picture => {
+      const newPicture = new PictureCreate(picture.image_url, picture.title, picture.description, picture.keyword, picture.horns, '2');
+      newPicture.renderWithHandlebars();
+    });
+  });
+};
+
 // --- button to handle click event and change which items are shown on page
-$('#moreItems').on('click', function(){
+$('#moreItems').on('click', function () {
   $('li.1').hide();
   $('li.2').show();
   $('#moreItems').hide();
   $('#goBack').show();
+  $('#pageOne').hide();
+  $('#pageTwo').show();
+  pageTwoDropdown();
 });
 
-$('#goBack').on('click', function(){
+$('#goBack').on('click', function () {
   $('li.2').hide();
   $('li.1').show();
   $('#goBack').hide();
   $('#moreItems').show();
+  $('#pageOne').show();
+  $('#pageTwo').hide();
+  pageOneDropdown();
 });
 
+// function calls
+$('li.2').hide();
+$('#pageTwoFilter').hide();
+getDataPages();
 
-// ------
-
+// ------ make the filter change when selected------
 
 $('select').on('change', function () {
 
