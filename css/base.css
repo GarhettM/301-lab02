@@ -1,8 +1,9 @@
-* {
+/* * {
   outline: dotted red 2px;
-}
+} */
 
 
 body {
   background-color: darkgrey;
+  width: auto;
 }

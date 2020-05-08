@@ -2,7 +2,7 @@
 'use-strict';
 
 // --- this is a cup, we can change what's in it but we don't need to change the cup
-const pictureArray = [];
+PictureCreate.pictureArray = [];
 let pageType = '1';
 
 function PictureCreate(image_url, title, description, keyword, horns, page) {
@@ -12,14 +12,14 @@ function PictureCreate(image_url, title, description, keyword, horns, page) {
   this.keyword = keyword;
   this.horns = horns;
   this.page = page;
-  pictureArray.push(this);
+  PictureCreate.pictureArray.push(this);
 }
 
 // ---handlebars template for rendering to page -----
 PictureCreate.prototype.renderWithHandlebars = function () {
   const pictureTemplateHandlebars = Handlebars.compile($('#pictureTemplate').html()); // declare the function
   const result = pictureTemplateHandlebars(this); // pass the object through the function
-  $('ul').append(result); // append the returned html
+  $('#photo-template').append(result); // append the returned html
 };
 
 // -------------- OLD UNUSED render function - now we have handlebars! -----
@@ -40,7 +40,7 @@ PictureCreate.prototype.render = function () {
 // -------------- drop down menu functions --------
 const pageOneDropdown = () => {
   let keywordArray = [];
-  pictureArray.forEach((value) => {
+  PictureCreate.pictureArray.forEach((value) => {
     if (value.page === '1') {
       if (!keywordArray.includes(value.keyword)) {
         keywordArray.push(value.keyword);
@@ -57,7 +57,7 @@ const pageOneDropdown = () => {
 
 const pageTwoDropdown = () => {
   let keywordArray = [];
-  pictureArray.forEach((value) => {
+  PictureCreate.pictureArray.forEach((value) => {
     if (value.page === '2') {
       if (!keywordArray.includes(value.keyword)) {
         keywordArray.push(value.keyword);
@@ -87,6 +87,7 @@ const getDataPages = () => {
     data.forEach(picture => {
       const newPicture = new PictureCreate(picture.image_url, picture.title, picture.description, picture.keyword, picture.horns, '2');
       newPicture.renderWithHandlebars();
+      $('li.2').hide();
     });
   });
 };
@@ -117,8 +118,50 @@ $('#goBack').on('click', function () {
   pageOneDropdown();
 });
 
+//--------------Button to filter by # of Horns -------
+
+$('#filterByHorns').on('click', function()  {
+  $('#photo-template').empty();
+  PictureCreate.pictureArray.sort((a, b) => {
+    if(a.horns > b.horns) {
+      return 1;
+    } else if (a.horns < b.horns) {
+      return -1;
+    } else  {
+      return 0;
+    }
+  })
+  console.log(PictureCreate.pictureArray)
+  PictureCreate.pictureArray.forEach(value => value.renderWithHandlebars())
+  $('li').hide();
+  $(`.${pageType}`).show();
+
+  
+})
+
+// -------------Button to filter by Title --------
+
+$('#filterByTitle').on('click', function()  {
+  $('#photo-template').empty();
+  PictureCreate.pictureArray.sort((a, b) => {
+    if(a.title > b.title) {
+      return 1;
+    } else if (a.title < b.title) {
+      return -1;
+    } else  {
+      return 0;
+    }
+  })
+  console.log(PictureCreate.pictureArray)
+  PictureCreate.pictureArray.forEach(value => value.renderWithHandlebars())
+  $('li').hide();
+  $(`.${pageType}`).show();
+
+  
+})
+
 // function calls
-$('li.2').hide();
+
 $('#pageTwoFilter').hide();
 getDataPages();
 
@@ -130,11 +173,11 @@ $('select').on('change', function () {
   let $selected = $(this).val();
   // if($selected !== 'default') {
 
-    pictureArray.forEach((a, index) => {
-      if($selected === pictureArray[index].keyword) {
+    PictureCreate.pictureArray.forEach((a, index) => {
+      if($selected === PictureCreate.pictureArray[index].keyword) {
         console.log('test')
-        if (pictureArray[index].page === pageType)  {
-          pictureArray[index].renderWithHandlebars();
+        if (PictureCreate.pictureArray[index].page === pageType)  {
+          PictureCreate.pictureArray[index].renderWithHandlebars();
         }
       }
     });

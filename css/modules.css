@@ -3,6 +3,66 @@ li:nth-child(1) {
 }
 
 header {
-  height: 100px;
+  height: 200px;
+  margin-left: 200px;
+  margin-right: 200px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: solid;
+  border-style: dashed;
+  border-color: coral;
+}
+
+header h1{
+  display: flex;
+  justify-content: center;
+  font-family: 'Abril Fatface', cursive;
+  font-size: 300%;
+  color: gold;
+}
+
+header section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+}
+
+header section button {
+  margin: auto;
+}
+main  {
+  width: auto;
+  margin-left: 200px;
+  margin-right: 200px;
+}
+
+main section  {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+ul  {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-evenly;
   
+}
+
+li  {
+  width: 200px;
+  height: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  
+}
+
+footer  {
+  display: flex;
+  justify-content: center;
 }

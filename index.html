@@ -8,15 +8,16 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layouts.css">
   <link rel="stylesheet" href="css/modules.css">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
 
   <script id="pictureTemplate" type="text/x-handlebars-template">
-    <li class="{{this.page}} {{this.keyword}}">
-      <h2>{{this.title}}</h2>
-      <h4>{{this.keyword}}</h4>
-      <img src="{{this.image_url}}">
-      <h5>{{this.horns}}</h5>
-      <p>{{this.description}}</p>
-    </li>
+      <li class="{{this.page}} {{this.keyword}}">
+        <h2>{{this.title}}</h2>
+        <h4>{{this.keyword}}</h4>
+        <img src="{{this.image_url}}">
+        <h5>{{this.horns}}</h5>
+        <p>{{this.description}}</p>
+      </li>
   </script>
 
 </head>
@@ -24,19 +25,23 @@
 <body>
   <header>
     <h1>The Gallery of Horns</h1>
-    <button id="moreItems">See More Items!</button>
-    <button id="goBack" style="display: none">See Previous Items...</button>
+    <section>
+      <button id="moreItems">See More Items!</button>
+      <button id="goBack" style="display: none">See Previous Items...</button>
+      <button id="filterByHorns">Filter By Number of Horns</button>
+      <button id="filterByTitle">Filter By Number of Title</button>
 
-    <select id="pageOneFilter">
-      <option value="default">Filter by Keyword</option>
-    </select>
-    <select id="pageTwoFilter">
-      <option value="default">Filter by Keyword</option>
-    </select>
+      <select id="pageOneFilter">
+        <option value="default">Filter by Keyword</option>
+      </select>
+      <select id="pageTwoFilter">
+        <option value="default">Filter by Keyword</option>
+      </select>
+    </section>
   </header>
   <main>
-    <section id="photo-template">
-      <ul>
+    <section >
+      <ul id="photo-template">
       </ul>
     </section>
 
