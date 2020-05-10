@@ -72,7 +72,6 @@ const pageTwoDropdown = () => {
   });
 };
 
-
 // --- retrieves info from json files -------
 const getDataPages = () => {
   $.get('data/page-1.json', function (data) {
@@ -102,7 +101,7 @@ $('#moreItems').on('click', function () {
   $('#goBack').show();
   $('#pageOne').hide();
   $('#pageTwo').show();
-  
+
   pageTwoDropdown();
 });
 
@@ -120,71 +119,58 @@ $('#goBack').on('click', function () {
 
 //--------------Button to filter by # of Horns -------
 
-$('#filterByHorns').on('click', function()  {
+$('#filterByHorns').on('click', function() {
   $('#photo-template').empty();
   PictureCreate.pictureArray.sort((a, b) => {
     if(a.horns > b.horns) {
       return 1;
     } else if (a.horns < b.horns) {
       return -1;
-    } else  {
+    } else {
       return 0;
     }
-  })
-  console.log(PictureCreate.pictureArray)
-  PictureCreate.pictureArray.forEach(value => value.renderWithHandlebars())
+  });
+  console.log(PictureCreate.pictureArray);
+  PictureCreate.pictureArray.forEach(value => value.renderWithHandlebars());
   $('li').hide();
   $(`.${pageType}`).show();
-
-  
-})
+});
 
 // -------------Button to filter by Title --------
 
-$('#filterByTitle').on('click', function()  {
+$('#filterByTitle').on('click', function() {
   $('#photo-template').empty();
   PictureCreate.pictureArray.sort((a, b) => {
     if(a.title > b.title) {
       return 1;
     } else if (a.title < b.title) {
       return -1;
-    } else  {
+    } else {
       return 0;
     }
-  })
-  console.log(PictureCreate.pictureArray)
-  PictureCreate.pictureArray.forEach(value => value.renderWithHandlebars())
+  });
+  console.log(PictureCreate.pictureArray);
+  PictureCreate.pictureArray.forEach(value => value.renderWithHandlebars());
   $('li').hide();
   $(`.${pageType}`).show();
-
-  
-})
-
-// function calls
-
-$('#pageTwoFilter').hide();
-getDataPages();
-
-// ------ make the filter change when selected------
-
-$('select').on('change', function () {
-
-  $('li').hide();
-  let $selected = $(this).val();
-  // if($selected !== 'default') {
-
-    PictureCreate.pictureArray.forEach((a, index) => {
-      if($selected === PictureCreate.pictureArray[index].keyword) {
-        console.log('test')
-        if (PictureCreate.pictureArray[index].page === pageType)  {
-          PictureCreate.pictureArray[index].renderWithHandlebars();
-        }
-      }
-    });
-  // } else if (pictureArray.page === pageType)  {
-  //   pictureArray.renderWithHandlebars();
-  // }
 });
 
+// ------ make the filter change when selected------
+$('select').on('change', function () {
+  $('li').hide();
+  let $selected = $(this).val();
+  PictureCreate.pictureArray.forEach((a, index) => {
+    if($selected === PictureCreate.pictureArray[index].keyword) {
+      console.log('test');
+      if (PictureCreate.pictureArray[index].page === pageType) {
+        PictureCreate.pictureArray[index].renderWithHandlebars();
+      }
+    }
+  });
+});
+
+// function calls
+$('#pageTwoFilter').hide();
+getDataPages();
 
 

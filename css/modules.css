@@ -32,6 +32,7 @@ header section {
 header section button {
   margin: auto;
 }
+
 main  {
   width: auto;
   margin-left: 200px;
@@ -51,7 +52,6 @@ ul  {
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-evenly;
-  
 }
 
 li  {
@@ -59,7 +59,6 @@ li  {
   height: auto;
   padding-left: 15px;
   padding-right: 15px;
-  
 }
 
 footer  {
